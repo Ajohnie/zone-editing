@@ -1,0 +1,55 @@
+// --------------------------
+// Set-up styles
+// --------------------------
+figure { margin: 0; }
+
+// --------------------------
+// Grid styles
+// --------------------------
+.grid {
+    display: grid;
+    grid-auto-flow: column; // display the items in columns only, ie horizontal
+    grid-auto-columns: 90%; // create as many columns as there are items. 90% so we can see next item on the right.
+    grid-gap: 1em;
+    overflow-x: scroll; // scroll only within the grid, not entire page
+    -webkit-overflow-scrolling: touch; // better scrolling on touch
+    padding: 2em 1em;
+    margin: 0px;
+
+    @media all and (min-width: 600px) {
+        grid-auto-flow: initial; // default: display items in rows and cols
+        grid-template-columns: repeat(auto-fit, minmax(auto,20em)); // as many columns with max-width of 20em;
+        justify-content: center; // center the items - this is optional
+    }
+
+    &__figure {
+        display: grid;
+        grid-template-rows: 15em 1fr; // 15em high row for image – value could be whatever
+        grid-gap: 1em;
+
+        img {
+            width: 100%;
+            height: 100%;
+            /*object-fit: cover; // crop image within its cell*/
+            border-radius: $border-radius;
+            box-shadow: 0 0 16px #333;
+            transition: all 1.5s ease;
+            &:hover {
+                box-shadow: 0 0 32px #333;
+            }
+        }
+
+    }
+}
+
+.figure{
+    border-color: $theme-color-light;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: $border-radius;
+    font-style: italic;
+    margin-bottom: 2% !important;
+}
+.caption{
+    line-height: $section-line-height /4;
+}
