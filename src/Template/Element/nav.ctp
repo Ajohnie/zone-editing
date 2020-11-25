@@ -1,35 +1,30 @@
 <?php
 
-use Cake\Routing\Router ?>
-<!--Navigation-->
-<header>
-    <div class="nav-bar">
-        <div class="container">
-            <ul>
-                <li class="brand"><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'home']) ?>">Bes Charity Foundation</a></li>
-                <div class="navigation">
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'home']) ?>" class="<?= ($page == 'home') ? 'active' : '' ?>">Home</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'about']) ?>" class="<?= ($page == 'about') ? 'active' : '' ?>">About Us</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'projects']) ?>" class="<?= ($page == 'projects') ? 'active' : '' ?>">Projects</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'join']) ?>" class="<?= ($page == 'join') ? 'active' : '' ?>">Join Us</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'donate']) ?>" class="<?= ($page == 'donate') ? 'active' : '' ?>">Donate</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'contact']) ?>" class="<?= ($page == 'contact') ? 'active' : '' ?>">Contact Us</a></li>
-                    <li><a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'gallery']) ?>" class="<?= ($page == 'gallery') ? 'active' : '' ?>">Gallery</a></li>
+use Cake\Routing\Router;
 
+?>
+<div class="w3-row">
+    <div class="search-header w3-panel w3-cell-row w3-flat-concrete">
+        <div class="logo w3-container w3-cell" style="width: 20%">
+            <a href="<?= Router::url(['controller' => 'search', 'action' => 'index']) ?>"><?= $this->Html->image('favicon.png') ?></a>
+        </div>
+        <div class="w3-container w3-cell" style="width: 100%">
+            <div class="admin-header"><?= $title ?></div>
+        </div>
+        <div class="w3-container w3-cell" style="width: 20%">
+            <div class="admin-header">
+                <div class="w3-dropdown-hover">
+                    <button class="w3-btn w3-flat-asbestos">Menu</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4"
+                         style="z-index: 1000;width: 2rem;min-width: 12rem">
+                        <?= $this->Html->link(__('LOG OUT'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'w3-bar-item w3-button']) ?>
+                        <?= $this->Html->link(__('USERS'), ['controller' => 'Users', 'action' => 'index'], ['style' => ($controller === 'users') ? 'display:none' : 'display:block', 'class' => 'w3-bar-item w3-button']) ?>
+                        <?= $this->Html->link(__('ZONE DAYS'), ['controller' => 'Zonedays', 'action' => 'index'], ['style' => ($controller === 'zonedays') ? 'display:none' : 'display:block', 'class' => 'w3-bar-item w3-button']) ?>
+                        <?= $this->Html->link(__('POSTAL CODES'), ['controller' => 'Postcodemappings', 'action' => 'index'], ['style' => ($controller === 'postcodemappings') ? 'display:none' : 'display:block', 'class' => 'w3-bar-item w3-button']) ?>
+                        <?= $this->Html->link(__('ADD DATES'), ['controller' => 'Zonedates', 'action' => 'index'], ['style' => ($controller === 'zonedates') ? 'display:none' : 'display:block', 'class' => 'w3-bar-item w3-button']) ?>
+                    </div>
                 </div>
-                <li class="menuButton"><a href="#" class="dropbtn" onclick="showMenu()">&Congruent;</a></li>
-            </ul>
-            <hr>
-            <div class="dropdown-content figure-caption" id="dropdown-menu">
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'home']) ?>" class="<?= ($page == 'home') ? 'active' : '' ?>">Home</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'about']) ?>" class="<?= ($page == 'about') ? 'active' : '' ?>">About Us</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'projects']) ?>" class="<?= ($page == 'projects') ? 'active' : '' ?>">Projects</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'join']) ?>" class="<?= ($page == 'join') ? 'active' : '' ?>">Join Us</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'donate']) ?>" class="<?= ($page == 'donate') ? 'active' : '' ?>">Donate</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'contact']) ?>" class="<?= ($page == 'contact') ? 'active' : '' ?>">Contact Us</a>
-                <a href="<?= Router::url(['controller' => 'pages', 'action' => 'display', 'gallery']) ?>" class="<?= ($page == 'gallery') ? 'active' : '' ?>">Gallery</a>
             </div>
         </div>
-    </div>    
-</header>
-<!--End Navigation-->
+    </div>
+</div>

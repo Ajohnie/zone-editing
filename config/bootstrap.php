@@ -33,7 +33,6 @@ use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
@@ -41,7 +40,6 @@ use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
-use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
 /**
@@ -192,12 +190,15 @@ Type::build('datetime')
 Type::build('timestamp')
     ->useImmutable();
 
-/*
- * Custom Inflector rules, can be set to correctly pluralize or singularize
- * table, model, controller names or whatever other string is passed to the
- * inflection functions.
- */
-//Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
-//Inflector::rules('irregular', ['red' => 'redlings']);
-//Inflector::rules('uninflected', ['dontinflectme']);
-//Inflector::rules('transliteration', ['/å/' => 'aa']);
+// declare app name for use in front end pages
+define('APP_NAME', 'Zone Pricing');
+// declare regex used to validate post codes
+define('POSTCODE_REGEX', '/^[A-Z0-9]{1,4}$/m');
+define('MONTHS', array(
+    1 => 'Jan', 2 => 'Feb',
+    3 => 'Mar', 4 => 'Apr',
+    5 => 'May', 6 => 'June',
+    7 => 'July', 8 => 'Aug',
+    9 => 'Sep', 10 => 'Oct',
+    11 => 'Nov', 12 => 'Dec',
+));

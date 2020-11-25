@@ -2,31 +2,32 @@
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use App\Model\Entity\User;
+use ArrayObject;
+use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\Event;
-use Cake\Datasource\EntityInterface;
-use ArrayObject;
-Use Cake\Cache\Cache;
+
 /**
  * Users Model
  *
- * @property \App\Model\Table\StaffsTable|\Cake\ORM\Association\BelongsTo $Staffs
+ * @method User get($primaryKey, $options = [])
+ * @method User newEntity($data = null, array $options = [])
+ * @method User[] newEntities(array $data, array $options = [])
+ * @method User|bool save(EntityInterface $entity, $options = [])
+ * @method User saveOrFail(EntityInterface $entity, $options = [])
+ * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method User[] patchEntities($entities, array $data, array $options = [])
+ * @method User findOrCreate($search, callable $callback = null, $options = [])
  *
- * @method \App\Model\Entity\User get($primaryKey, $options = [])
- * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin TimestampBehavior
  */
-class UsersTable extends Table {
+class UsersTable extends Table
+{
 
     /**
      * Initialize method
@@ -34,7 +35,8 @@ class UsersTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config) {
+    public function initialize(array $config)
+    {
         parent::initialize($config);
 
         $this->setTable('users');
@@ -47,29 +49,25 @@ class UsersTable extends Table {
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
-    public function validationDefault(Validator $validator) {
+    public function validationDefault(Validator $validator)
+    {
         $validator
-                ->integer('id')
-                ->allowEmptyString('id', 'create');
+            ->integer('id')
+            ->allowEmptyString('id', 'create');
 
         $validator
-                ->email('email')
-                ->requirePresence('email', 'create')
-                ->allowEmptyString('email', false);
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->allowEmptyString('email', false);
 
         $validator
-                ->scalar('password')
-                ->maxLength('password', 600)
-                ->requirePresence('password', 'create')
-                ->allowEmptyString('password', false);
-
-        $validator
-                ->scalar('hash')
-                ->maxLength('hash', 600)
-                ->allowEmptyString('hash');
+            ->scalar('password')
+            ->maxLength('password', 600)
+            ->requirePresence('password', 'create')
+            ->allowEmptyString('password', false);
 
         return $validator;
     }
@@ -78,22 +76,34 @@ class UsersTable extends Table {
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
-    public function buildRules(RulesChecker $rules) {
+    public function buildRules(RulesChecker $rules)
+    {
         $rules->add($rules->isUnique(['email'], 'The Email You Provided Already Exits !'));
-        $rules->add($rules->existsIn(['staff_id'], 'Staffs'));
 
         return $rules;
     }
 
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options) {
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
         Cache::clearAll();
     }
 
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options) {
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
         Cache::clearAll();
+    }
+
+    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        // make sure you don't lock your self out
+        $noOfUsers = $this->find()->count();
+        if ($noOfUsers === 1) {
+            $entity->setError('id', 'System must have at least one user');
+            return false;
+        }
     }
 
 }

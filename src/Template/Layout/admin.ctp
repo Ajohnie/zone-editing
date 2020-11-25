@@ -24,7 +24,10 @@
     <?= $this->element('css') ?>
 </head>
 <body class="w3-flat-silver">
+<?php /*$this->element('nav') */?>
+<?= $this->Flash->render() ?>
 <?= $this->fetch('content') ?>
 <?= $this->element('js') ?>
 </body>
 </html>
+

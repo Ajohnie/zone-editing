@@ -1,59 +1,67 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
- */
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Staffs'), ['controller' => 'Staffs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Staff'), ['controller' => 'Staffs', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Users') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('staff_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('hash') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= $user->has('staff') ? $this->Html->link($user->staff->id, ['controller' => 'Staffs', 'action' => 'view', $user->staff->id]) : '' ?></td>
-                <td><?= h($user->email) ?></td>
-                <td><?= h($user->password) ?></td>
-                <td><?= h($user->hash) ?></td>
-                <td><?= h($user->created) ?></td>
-                <td><?= h($user->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<div class="w3-display-container">
+    <div class="w3-display-middle">
+        <div class="main-admin w3-flat-clouds">
+            <!--DIV FOR HEADER-->
+            <?= $this->element('nav', ['title' => 'USERS', 'controller' => $controller]) ?>
+            <!--DIV FOR ADDING USERS FORM-->
+            <div class="w3-container">
+                <div class="w3-row">
+                    <?= $this->Form->create($newUser, ['class' => 'section-text', 'id' => 'addUserForm']) ?>
+                    <table class="w3-table">
+                        <thead class="w3-border-bottom">
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="margin-top: 0;margin-left -3rem !important;">
+                                <?= $this->Form->control('email', [
+                                    'class' => 'w3-input w3-margin',
+                                    'required' => true,
+                                    'type' => 'email',
+                                    'label' => '',
+                                ]) ?>
+                            </td>
+                            <td>
+                                <?= $this->Form->control('password', [
+                                    'class' => 'w3-input w3-margin',
+                                    'required' => true,
+                                    'type' => 'password',
+                                    'label' => '',
+                                ]) ?>
+                            </td>
+                            <td><?= $this->Form->button(__('Add'), ['class' => 'w3-btn w3-black w3-round-large', 'style' => 'margin-top: 1rem;margin-left: 1rem']) ?></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <?= $this->Form->end() ?>
+                </div>
+            </div>
+            <!-- DIV FOR ZONE TABLE-->
+            <div class="w3-cell-row">
+                <div class="w3-cell-middle">
+                    <div class="tableDiv">
+                        <table class="w3-table">
+                            <thead class="w3-border-bottom">
+                            <th>Email</th>
+                            <th></th>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td><?= $user->email?></td>
+                                    <td><?= $this->Html->link(__('Delete'), ['controller' => 'Users', 'action' => 'delete', 'id' => $user->id], ['class' => 'w3-btn w3-black w3-round-large', 'style' => 'margin-top: 0']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

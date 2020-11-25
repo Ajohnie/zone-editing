@@ -12,8 +12,10 @@
  * @since         3.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Database\Statement;
 
+use Cake\Log\Log;
 use PDO;
 
 /**

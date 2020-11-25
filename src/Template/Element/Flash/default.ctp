@@ -1,5 +1,5 @@
 <?php
-$class = 'message';
+$class = 'w3-panel w3-green';
 if (!empty($params['class'])) {
     $class .= ' ' . $params['class'];
 }

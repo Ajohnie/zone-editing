@@ -18,10 +18,11 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Cake\Routing\Route\DashedRoute;
 
 /**
  * The default class to use for all routes
@@ -50,42 +51,16 @@ Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
     $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware(['httpOnly' => true]));
     $routes->applyMiddleware('csrf');
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    Router::scope('/pages', function (RouteBuilder $routes) {
-        $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-        
-        $routes->connect('/about', ['controller' => 'Pages', 'action' => 'display','about']);
-        $routes->connect('/who-we-are', ['controller' => 'Pages', 'action' => 'display','who-we-are']);
-        $routes->connect('/our-mission', ['controller' => 'Pages', 'action' => 'display','our-mission']);
-        $routes->connect('/our-vision', ['controller' => 'Pages', 'action' => 'display','our-vision']);
-        $routes->connect('/our-objectives', ['controller' => 'Pages', 'action' => 'display','our-objectives']);
-        $routes->connect('/our-goals', ['controller' => 'Pages', 'action' => 'display','our-goals']);
-        $routes->connect('/our-policy', ['controller' => 'Pages', 'action' => 'display','our-policy']);
-        
-        $routes->connect('/blog', ['controller' => 'Pages', 'action' => 'display','blog']);
-        
-        $routes->connect('/join', ['controller' => 'Pages', 'action' => 'display','join']);
-        $routes->connect('/project-background', ['controller' => 'Pages', 'action' => 'display','project-background']);
-        $routes->connect('/project-justification', ['controller' => 'Pages', 'action' => 'display','project-justification']);
-        $routes->connect('/project-outcomes', ['controller' => 'Pages', 'action' => 'display','project-outcomes']);
-        $routes->connect('/project-partners', ['controller' => 'Pages', 'action' => 'display','project-partners']);
-        
-        $routes->connect('/projects', ['controller' => 'Pages', 'action' => 'display','projects']);
-        $routes->connect('/water-and-sanitation', ['controller' => 'Pages', 'action' => 'display','water-and-sanitation']);
-        $routes->connect('/fight-hiv-aids', ['controller' => 'Pages', 'action' => 'display','fight-hiv-aids']);
-        $routes->connect('/malaria', ['controller' => 'Pages', 'action' => 'display','malaria']);
-        $routes->connect('/community-development', ['controller' => 'Pages', 'action' => 'display','community-development']);
-        
-        $routes->connect('/contact', ['controller' => 'Pages', 'action' => 'display','contact']);
-        $routes->connect('/gallery', ['controller' => 'Pages', 'action' => 'display','gallery']);
-        $routes->connect('/contact', ['controller' => 'Pages', 'action' => 'contact']);
-    });
-   
+    $routes->connect('/', ['controller' => 'Search', 'action' => 'index']);
+    $routes->connect('/admin', ['controller' => 'Users', 'action' => 'index']);
+    $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
+    $routes->connect('/users/delete/:id', ['controller' => 'Users', 'action' => 'delete',':id']);
+    $routes->connect('/zonedates', ['controller' => 'Zonedates', 'action' => 'index']);
+    $routes->connect('/zonedates/delete/:id', ['controller' => 'Zonedates', 'action' => 'delete',':id']);
+    $routes->connect('/postcodemappings', ['controller' => 'Postcodemappings', 'action' => 'index']);
+    $routes->connect('/postcodemappings/delete/:id', ['controller' => 'Postcodemappings', 'action' => 'delete',':id']);
+    $routes->connect('/zonedays', ['controller' => 'Zonedays', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 
-Router::scope('/messages', function (RouteBuilder $routes) {
-    $routes->connect('/donate', ['controller' => 'Messages', 'action' => 'donate']);
-    $routes->fallbacks(DashedRoute::class);
-});
 

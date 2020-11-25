@@ -23,19 +23,18 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->element('css') ?>
 </head>
-<body>
-    <div id="container">
-        <div id="header">
-            <h1><?= __('Error') ?></h1>
-        </div>
-        <div id="content">
+<body class="w3-flat-silver">
+<div class="w3-container">
+    <div class="w3-panel w3-red">
+        <h3><?= __('Oops !, An Error Occurred') ?></h3>
+        <p>
             <?= $this->Flash->render() ?>
-
+        </p>
+        <p>
             <?= $this->fetch('content') ?>
-        </div>
-        <div id="footer">
-            <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
-        </div>
+        </p>
+        <p><?= $this->Html->link(__('Back'), 'javascript:history.back()') ?></p>
     </div>
+</div>
 </body>
 </html>
